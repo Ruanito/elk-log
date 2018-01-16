@@ -1,0 +1,27 @@
+input {
+	beats {
+		port => 5044
+	}
+	http {
+		port => 5000
+	}
+}
+
+output {
+	if [fields][origin] == "apache"  {
+		elasticsearch {
+			hosts => ["158.69.205.163:9200"]
+			index => "apache"
+		}
+	} else if [fields][origin] == "wordpress" {
+			elasticsearch {
+			hosts => ["158.69.205.163:9200"]
+			index => "others"
+		}
+	} else {
+		elasticsearch {
+			hosts => ["158.69.205.163:9200"]
+			index => "others"
+		}
+	}
+}
