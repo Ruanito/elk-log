@@ -16,7 +16,7 @@ output {
 	} else if [fields][origin] == "wordpress" {
 			elasticsearch {
 			hosts => ["158.69.205.163:9200"]
-			index => "others"
+			index => "wordpress"
 		}
 	} else {
 		elasticsearch {
