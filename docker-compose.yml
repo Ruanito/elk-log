@@ -50,6 +50,5 @@ services:
         ipv4_address: 172.18.0.20
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  nginx-proxy:
+    external: true
