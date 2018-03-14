@@ -12,6 +12,9 @@ services:
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    networks:
+      elastic:
+        ipv4_address: 10.5.0.1
 
 
   logstash:
@@ -27,6 +30,9 @@ services:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - elasticsearch
+    networks:
+      elastic:
+        ipv4_address: 10.5.0.2
 
   kibana:
     build:
@@ -35,12 +41,15 @@ services:
       - ./kibana/config/:/usr/share/kibana/config:ro
     ports:
       - "5601:5601"
-    environment:
-      VIRTUAL_HOST: elasticsearch.com
     depends_on:
       - elasticsearch
+    networks:
+      elastic:
+        ipv4_address: 10.5.0.3
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  elastic:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
