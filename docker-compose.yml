@@ -14,7 +14,7 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       elastic:
-        ipv4_address: 10.5.0.1
+        ipv4_address: 10.0.30.10
 
 
   logstash:
@@ -32,7 +32,7 @@ services:
       - elasticsearch
     networks:
       elastic:
-        ipv4_address: 10.5.0.2
+        ipv4_address: 10.0.30.15
 
   kibana:
     build:
@@ -45,11 +45,12 @@ services:
       - elasticsearch
     networks:
       elastic:
-        ipv4_address: 10.5.0.3
+        ipv4_address: 10.0.30.20
 
 networks:
   elastic:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.5.0.0/16
+        - subnet: 10.0.30.0/16
+        gateway: 10.0.30.1
