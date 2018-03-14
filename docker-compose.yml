@@ -43,8 +43,9 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
-    environment:
-      VIRTUAL_HOST: elasticdel.tk
+    networks:
+      elastic:
+        ipv4_address: 10.0.30.20
 
 networks:
   elastic:
@@ -53,6 +54,3 @@ networks:
       config:
         - subnet: 10.0.30.0/16
           gateway: 10.0.30.1
-  default:
-    external:
-      name: nginx-proxy
