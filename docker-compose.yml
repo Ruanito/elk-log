@@ -13,8 +13,8 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      elastic:
-        ipv4_address: 10.0.30.10
+      nginx-proxy:
+        ipv4_address: 172.18.0.10
 
 
   logstash:
@@ -31,8 +31,8 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      elastic:
-        ipv4_address: 10.0.30.15
+      nginx-proxy:
+        ipv4_address: 172.18.0.15
 
   kibana:
     build:
@@ -43,14 +43,13 @@ services:
       - "5601:5601"
     depends_on:
       - elasticsearch
+    environment:
+      VIRTUAL_HOST: elasticdel.tk
     networks:
-      elastic:
-        ipv4_address: 10.0.30.20
+      nginx-proxy:
+        ipv4_address: 172.18.0.20
 
 networks:
-  elastic:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.30.0/16
-          gateway: 10.0.30.1
+  default:
+    external:
+      name: nginx-proxy
